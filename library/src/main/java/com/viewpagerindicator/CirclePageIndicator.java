@@ -234,12 +234,14 @@ public class CirclePageIndicator extends View implements PageIndicator {
             longPaddingAfter = getPaddingBottom();
             shortPaddingBefore = getPaddingLeft();
         }
-
+        if (mDistance == 0.0f)
+            mDistance = mRadius;
         final float threeRadius = mRadius * 3;
         final float shortOffset = shortPaddingBefore + mRadius;
-        float longOffset = longPaddingBefore + mRadius;
+        float extra = (2*mRadius+mDistance)/2.0f;
+        float longOffset = longPaddingBefore + extra;
         if (mCentered) {
-            longOffset += ((longSize - longPaddingBefore - longPaddingAfter) / 2.0f) - ((count * threeRadius) / 2.0f);
+            longOffset += ((longSize - longPaddingBefore - longPaddingAfter) / 2.0f) - ((count * (2 * mRadius + mDistance) ) / 2.0f);
         }
 
         float dX;
@@ -249,9 +251,6 @@ public class CirclePageIndicator extends View implements PageIndicator {
         if (mPaintStroke.getStrokeWidth() > 0) {
             pageFillRadius -= mPaintStroke.getStrokeWidth() / 2.0f;
         }
-
-        if (mDistance == 0.0f)
-            mDistance = mRadius;
 
         //Draw stroked circles
         for (int iLoop = 0; iLoop < count; iLoop++) {
