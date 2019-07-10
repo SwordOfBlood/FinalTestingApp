@@ -194,6 +194,14 @@ public class CirclePageIndicator extends View implements PageIndicator {
         return mSnap;
     }
 
+    private float mDistance = 0.0f;
+
+    public void userSettingsForCircles(float rad, float distance)
+    {
+        setRadius(rad);
+        mDistance = distance;
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -242,9 +250,12 @@ public class CirclePageIndicator extends View implements PageIndicator {
             pageFillRadius -= mPaintStroke.getStrokeWidth() / 2.0f;
         }
 
+        if (mDistance == 0.0f)
+            mDistance = mRadius;
+
         //Draw stroked circles
         for (int iLoop = 0; iLoop < count; iLoop++) {
-            float drawLong = longOffset + (iLoop * threeRadius);
+            float drawLong = longOffset + 2*mRadius*iLoop + mDistance*iLoop;
             if (mOrientation == HORIZONTAL) {
                 dX = drawLong;
                 dY = shortOffset;
@@ -264,9 +275,9 @@ public class CirclePageIndicator extends View implements PageIndicator {
         }
 
         //Draw the filled circle according to the current scroll
-        float cx = (mSnap ? mSnapPage : mCurrentPage) * threeRadius;
+        float cx = (mSnap ? mSnapPage : mCurrentPage) * (2 * mRadius + mDistance);
         if (!mSnap) {
-            cx += mPageOffset * threeRadius;
+            cx += mPageOffset * (2 * mRadius + mDistance);
         }
         if (mOrientation == HORIZONTAL) {
             dX = longOffset + cx;

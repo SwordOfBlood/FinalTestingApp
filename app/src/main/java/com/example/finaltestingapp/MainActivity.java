@@ -61,8 +61,14 @@ public class MainActivity extends AppCompatActivity {
         mPager = (ViewPager)findViewById(R.id.pager);
         mPager.setAdapter(mAdapter);
 
-        mIndicator = (CirclePageIndicator)findViewById(R.id.indicator);
+        CirclePageIndicator smb = findViewById(R.id.indicator);
+        //Here we can change params of our circles
+        smb.userSettingsForCircles(25.0f, 25.0f);
+        //Here we can change colors of our circles if you know int equals to colors
+        //smb.setFillColor();
+        //smb.setPageColor();
+
+        mIndicator = smb;
         mIndicator.setViewPager(mPager);
     }
-
 }
