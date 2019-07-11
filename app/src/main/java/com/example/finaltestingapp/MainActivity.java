@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         CirclePageIndicator smb = findViewById(R.id.indicator);
         //Here we can change params of our circles
-        smb.userSettingsForCircles(100, 100);
+        smb.userSettingsForCircles(1000, 100);
         //Here we can change colors of our circles if you know int equals to colors
         //smb.setFillColor();
         //smb.setPageColor();

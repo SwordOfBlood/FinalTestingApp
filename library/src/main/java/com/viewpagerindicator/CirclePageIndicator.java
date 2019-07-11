@@ -244,6 +244,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         if (longSize - 10.0f< count*(2*mRadius+mDistance))
             standartize(longSize - 10.0f , mRadius, mDistance, count);
 
+        this.onMeasure(mWidthMeasureSpec,mHeightMeasureSpec);
 
         int longPaddingBefore;
         int longPaddingAfter;
@@ -475,8 +476,12 @@ public class CirclePageIndicator extends View implements PageIndicator {
      *
      * @see android.view.View#onMeasure(int, int)
      */
+    private int mWidthMeasureSpec;
+    private int mHeightMeasureSpec;
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        mWidthMeasureSpec = widthMeasureSpec;
+        mHeightMeasureSpec = heightMeasureSpec;
         if (mOrientation == HORIZONTAL) {
             setMeasuredDimension(measureLong(widthMeasureSpec), measureShort(heightMeasureSpec));
         } else {
@@ -530,7 +535,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         } else {
             //Measure the height
             //TODO: change the result for new radius
-            result = (int)(300 + getPaddingTop() + getPaddingBottom() + 1);
+            result = (int)(2*mRadius + getPaddingTop() + getPaddingBottom() + 1);
             //Respect AT_MOST value if that was what is called for by measureSpec
             if (specMode == MeasureSpec.AT_MOST) {
                 result = Math.min(result, specSize);
