@@ -195,11 +195,27 @@ public class CirclePageIndicator extends View implements PageIndicator {
     }
 
     private float mDistance = 0.0f;
-
     public void userSettingsForCircles(float rad, float distance)
     {
         setRadius(rad);
         mDistance = distance;
+    }
+
+    private void standartize(float length, float rad, float dist, int count)
+    {
+        float interval = rad/dist;
+        while (count*(2*rad+dist)>length)
+        {
+            if (0.8f*interval < rad/dist || 1.2f*interval > rad/dist)
+            {
+                dist -= 0.05f*dist;
+                rad -= 0.05f*rad;
+            }
+            else
+                dist -= 0.05f*dist;
+        }
+        setRadius(rad);
+        mDistance = dist;
     }
 
     @Override
@@ -220,22 +236,30 @@ public class CirclePageIndicator extends View implements PageIndicator {
         }
 
         int longSize;
+
+        if (mOrientation == HORIZONTAL)
+            longSize = getWidth();
+        else
+            longSize = getHeight();
+        if (longSize - 10.0f< count*(2*mRadius+mDistance))
+            standartize(longSize - 10.0f , mRadius, mDistance, count);
+
+
         int longPaddingBefore;
         int longPaddingAfter;
         int shortPaddingBefore;
         if (mOrientation == HORIZONTAL) {
-            longSize = getWidth();
             longPaddingBefore = getPaddingLeft();
             longPaddingAfter = getPaddingRight();
             shortPaddingBefore = getPaddingTop();
         } else {
-            longSize = getHeight();
             longPaddingBefore = getPaddingTop();
             longPaddingAfter = getPaddingBottom();
             shortPaddingBefore = getPaddingLeft();
         }
         if (mDistance == 0.0f)
             mDistance = mRadius;
+
         final float threeRadius = mRadius * 3;
         final float shortOffset = shortPaddingBefore + mRadius;
         float extra = (2*mRadius+mDistance)/2.0f;
@@ -505,7 +529,8 @@ public class CirclePageIndicator extends View implements PageIndicator {
             result = specSize;
         } else {
             //Measure the height
-            result = (int)(2 * mRadius + getPaddingTop() + getPaddingBottom() + 1);
+            //TODO: change the result for new radius
+            result = (int)(300 + getPaddingTop() + getPaddingBottom() + 1);
             //Respect AT_MOST value if that was what is called for by measureSpec
             if (specMode == MeasureSpec.AT_MOST) {
                 result = Math.min(result, specSize);
