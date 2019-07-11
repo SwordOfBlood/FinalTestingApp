@@ -231,6 +231,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
             }
         setRadius(rad);
         mDistance = dist;
+        invalidate();
     }
 
     @Override
@@ -256,10 +257,10 @@ public class CirclePageIndicator extends View implements PageIndicator {
             longSize = getWidth();
         else
             longSize = getHeight();
-        if (longSize - 10.0f< count*(2*mRadius+mDistance))
+        if (longSize - 10.0f< count*(2*mRadius+mDistance)){
             standartize(longSize - 10.0f , mRadius, mDistance, count);
-
-        this.onMeasure(mWidthMeasureSpec,mHeightMeasureSpec);
+            requestLayout();
+        }
 
         int longPaddingBefore;
         int longPaddingAfter;
