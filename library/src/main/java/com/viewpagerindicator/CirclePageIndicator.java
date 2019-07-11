@@ -204,16 +204,31 @@ public class CirclePageIndicator extends View implements PageIndicator {
     private void standartize(float length, float rad, float dist, int count)
     {
         float interval = rad/dist;
-        while (count*(2*rad+dist)>length)
-        {
-            if (0.8f*interval < rad/dist || 1.2f*interval > rad/dist)
+        if (rad>dist){
+            while (count*(2*rad+dist)>length)
             {
-                dist -= 0.05f*dist;
-                rad -= 0.05f*rad;
+                if (0.8f*interval < rad/dist || 1.2f*interval > rad/dist)
+                {
+                    dist -= 0.05f*dist;
+                    rad -= 0.05f*rad;
+                }
+                else
+                    dist -= 0.05f*dist;
             }
-            else
-                dist -= 0.05f*dist;
         }
+        else
+            {
+                while (count*(2*rad+dist)>length)
+                {
+                    if (dist>rad)
+                        dist -= 0.05f*dist;
+                    else
+                    {
+                        dist -= 0.05f*dist;
+                        rad -= 0.05f*rad;
+                    }
+                }
+            }
         setRadius(rad);
         mDistance = dist;
     }
@@ -487,6 +502,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         } else {
             setMeasuredDimension(measureShort(widthMeasureSpec), measureLong(heightMeasureSpec));
         }
+        invalidate();
     }
 
     /**
