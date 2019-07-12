@@ -1,5 +1,6 @@
 package com.example.finaltestingapp;
 
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import java.util.Random;
@@ -63,10 +64,13 @@ public class MainActivity extends AppCompatActivity {
 
         CirclePageIndicator smb = findViewById(R.id.indicator);
         //Here we can change params of our circles
-        smb.userSettingsForCircles(1000, 100);
+        smb.userSettingsForCircles(100, 100);
+
         //Here we can change colors of our circles if you know int equals to colors
-        //smb.setFillColor();
-        //smb.setPageColor();
+        int fillColor = ContextCompat.getColor(this, R.color.colorPrimary);
+        int pageColor = ContextCompat.getColor(this, R.color.colorAccent);
+        smb.setFillColor(fillColor);
+        smb.setPageColor(pageColor);
 
         mIndicator = smb;
         mIndicator.setViewPager(mPager);

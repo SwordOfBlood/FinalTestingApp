@@ -197,8 +197,10 @@ public class CirclePageIndicator extends View implements PageIndicator {
     private float mDistance = 0.0f;
     public void userSettingsForCircles(float rad, float distance)
     {
-        setRadius(rad);
-        mDistance = distance;
+        if (rad > 0)
+            setRadius(rad);
+        if (distance > 0)
+            mDistance = distance;
     }
 
     private void standartize(float length, float rad, float dist, int count)
